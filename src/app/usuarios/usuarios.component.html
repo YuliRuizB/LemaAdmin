@@ -1,0 +1,422 @@
+  <mat-toolbar style="height: 80px;">
+    <!-- Logo and Text in the Center -->
+    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+      <img src="assets/logoTest.png" alt="Logo" style="width: 150px; height: 100px; margin-right: 10px;">
+      <span style="font-size: 24px;"> {{ client[0]?.name}} </span>
+    </div>
+  
+    <!-- Alumnos Menu -->
+    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="face" class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>face</mat-icon> Alumnos
+    </button>
+    <mat-menu #face="matMenu">
+      <button mat-menu-item (click)="redirectTo('usuarios')">Usuarios</button>
+      <button mat-menu-item (click)="redirectTo('alumnos')" >Alumnos</button>
+      <button mat-menu-item (click)="redirectTo('reportes-alumnos')">Reportes</button>
+    </mat-menu>
+  
+    <!-- Administración Menu -->
+    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="account_balance" class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>account_balance</mat-icon> Administración
+    </button>
+    <mat-menu #account_balance="matMenu">
+      <button mat-menu-item (click)="redirectTo('pagos')">Pagos</button>
+      <button mat-menu-item (click)="redirectTo('productos')">Productos</button>
+      <button mat-menu-item (click)="redirectTo('promociones')">Promociones</button>
+      <button mat-menu-item (click)="redirectTo('reportes-administracion')">Reportes</button>
+    </mat-menu>
+  
+    <!-- Notificaciones Menu -->
+    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="announcement" class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>announcement</mat-icon> Notificaciones
+    </button>
+    <mat-menu #announcement="matMenu">
+      <button mat-menu-item (click)="redirectTo('notificaciones')">Notificaciones</button>
+    </mat-menu>
+  
+    <!-- Salones Menu -->
+    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="home" class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>home</mat-icon> Salones
+    </button>
+    <mat-menu #home="matMenu">
+      <button mat-menu-item (click)="redirectTo('salones')">Salones</button>
+      <button mat-menu-item (click)="redirectTo('maestros')">Maestros</button>
+      <button mat-menu-item (click)="redirectTo('reportes-salones')">Reportes</button>
+    </mat-menu>
+  
+      <!-- Administración Menu -->
+      <button mat-icon-button style="width: 250px;" [matMenuTriggerFor]="insert_emoticon" class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>insert_emoticon</mat-icon> {{ user?.displayName }}
+      </button>
+      <mat-menu #insert_emoticon="matMenu" >
+        <button mat-menu-item  (click)="logout()">Cerrar Session</button>
+      </mat-menu>
+  
+  </mat-toolbar>
+
+<mat-toolbar style="height: 80px;">
+    <!-- Logo and Text in the Center -->
+    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+
+      <span style="font-size: 24px;">Usuarios</span>
+    </div>
+</mat-toolbar>
+  
+  <div class="content" role="main">
+    <mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedIndexChange)="onTabChange($event)">
+      <mat-tab label="Usuarios"> 
+        <div class="mat-elevation-z8">
+            <div class="centered-container">
+             
+                <div style="margin-left: 70px;" class="search-container">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Nombre">
+                  </mat-form-field>
+                  <button mat-raised-button style="margin-left: 50px;" (click)="clearFilter()">Limpiar</button>
+                </div>
+              </div>
+              
+            <table mat-table [dataSource]="ELEMENT_DATA">
+          
+              <!-- Position Column -->
+              <ng-container matColumnDef="clave">
+                <th mat-header-cell *matHeaderCellDef> Clave </th>
+                <td mat-cell *matCellDef="let element"> {{element.claveCliente}} </td>
+              </ng-container>
+          
+              <!-- Name Column -->
+              <ng-container matColumnDef="displayName">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.displayName}} </td>
+              </ng-container>
+          
+              <!-- Weight Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>  
+          
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="claveCliente">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button [matMenuTriggerFor]="chatSetting">
+                    <mat-icon>...</mat-icon>
+                  </button>
+                  <mat-menu #chatSetting="matMenu">
+                    <button mat-menu-item (click)="verUsuario(element.uid)">Ver Usuario</button>
+                    <button mat-menu-item (click)="verAlumnos(element.id)">Alumnos</button>
+                    <button mat-menu-item (click)="borrarUsuario(element.uid)">Borrar Usuario</button>
+                    <button mat-menu-item (click)="pagosUsuario(element.uid)">Pagos</button>
+                  </mat-menu>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+    </mat-tab>
+    <mat-tab label="Agregar Usuario"> 
+        <form style="margin-top: 15px; margin-left: 15px;" [formGroup]="userForm" (ngSubmit)="submitForm()">
+          <div class="example-container">
+            <label for="fileInput" style="cursor: pointer;">
+              Subir Imagen
+              <input id="fileInput" type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none;" />
+            </label>
+            <br>
+            <mat-form-field id="name" appearance="fill" style="width: 400px;margin-top: 15px; ">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="name" id="name" />
+            </mat-form-field>
+        
+            <mat-form-field id="apPaterno" appearance="fill" style="width: 400px; ">
+              <mat-label>Apellido Paterno</mat-label>
+              <input matInput formControlName="apellidoPaterno" id="apellidoPaterno" />
+            </mat-form-field>
+        
+            <mat-form-field id="aMaterno" appearance="fill" style="width: 400px; ">
+              <mat-label>Apellido Materno</mat-label>
+              <input matInput formControlName="apellidoMaterno" id="apellidoMaterno" />
+            </mat-form-field>
+            <br>
+            <mat-form-field id="displayName" appearance="fill" style="width: 400px; ">
+              <mat-label>Display</mat-label>
+              <input matInput formControlName="displayName" id="displayName" />
+            </mat-form-field>
+        
+            <mat-form-field id="parentesco" appearance="fill" style="width: 400px; ">
+              <mat-label>Parentesco</mat-label>
+              <input matInput formControlName="parentesco" id="parentesco" />
+            </mat-form-field>
+            <mat-form-field id="fnacimiento" style="width: 400px;">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" id="fechaNacimiento">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        
+            <br>
+            <mat-form-field id="email" appearance="fill" style="width: 400px; ">
+              <mat-label>Correo Electrónico</mat-label>
+              <input matInput formControlName="email" id="email" />
+            </mat-form-field>
+        
+            <br>
+            <mat-form-field id="parentesco" appearance="fill" style="width: 400px; ">
+              <mat-label>Titular </mat-label>
+              <input matInput formControlName="parentesco" id="parentesco" />
+            </mat-form-field>
+        
+            <mat-form-field id="phone" appearance="fill" style="width: 400px;">
+              <mat-label>Teléfono</mat-label>
+              <input matInput formControlName="phone" id="phone" />
+            </mat-form-field>
+        
+            <br>
+            <mat-form-field id="parentesco2" appearance="fill" style="width: 400px; ">
+              <mat-label>Titular</mat-label>
+              <input matInput formControlName="parentesco2" id="parentesco2" />
+            </mat-form-field>
+        
+            <mat-form-field id="phone2" appearance="fill" style="width: 400px;">
+              <mat-label>Teléfono 2</mat-label>
+              <input matInput formControlName="phone2" id="phone2" />
+            </mat-form-field>
+        
+            <br>
+            <mat-form-field id="parentesco3" appearance="fill" style="width: 400px; ">
+              <mat-label>Titular </mat-label>
+              <input matInput formControlName="parentesco3" id="parentesco3" />
+            </mat-form-field>
+        
+            <mat-form-field id="phone3" appearance="fill" style="width: 400px;">
+              <mat-label>Teléfono 3</mat-label>
+              <input matInput formControlName="phone3" id="phone3" />
+            </mat-form-field>
+        
+        
+        
+          </div>
+          <br>
+          <mat-label>Dirección</mat-label>
+          <br>
+          <mat-form-field id="calle" appearance="fill" style="width: 400px;">
+            <mat-label>Calle</mat-label>
+            <input matInput formControlName="calle" id="calle" />
+          </mat-form-field>
+        
+          <mat-form-field id="numero" appearance="fill" style="width: 400px;">
+            <mat-label> Número</mat-label>
+            <input matInput formControlName="numero" id="numero" />
+          </mat-form-field>
+        
+          <mat-form-field id="colonia" appearance="fill" style="width: 400px;">
+            <mat-label>Colonia</mat-label>
+            <input matInput formControlName="colonia" id="colonia" />
+          </mat-form-field>
+          <br>
+          <mat-form-field id="codigoPostal" appearance="fill" style="width: 400px;">
+            <mat-label>Código Postal</mat-label>
+            <input matInput formControlName="codigoPostal" id="codigoPostal" />
+          </mat-form-field>
+        
+          <mat-form-field id="estado" appearance="fill" style="width: 400px;">
+            <mat-label>Estado</mat-label>
+            <input matInput formControlName="estado" id="estado" />
+          </mat-form-field>
+        
+          <mat-form-field id="municipio" appearance="fill" style="width: 400px;">
+            <mat-label>Municipio</mat-label>
+            <input matInput formControlName="municipio" id="municipio" />
+          </mat-form-field>
+          <br>
+          <button mat-button color="primary" type="submit">Agregar Usuario</button>
+        </form>
+    </mat-tab>         
+    </mat-tab-group>
+
+    <div *ngIf="verUsuarioClicked" id="VerUsuario">
+     
+      <form style="margin-top: 15px; margin-left: 15px;" [formGroup]="userFormEdit" (ngSubmit)="submitFormEdit()">
+        <div class="example-container">
+          <div style="display: flex; align-items: center; flex-direction: column;">
+            <!-- Image Section -->
+            <div style="margin-bottom: 10px;">
+             
+              <img [src]="imageUrl" alt="User Image" style="width: 200px; height: 200px;" />
+            </div>
+          
+            <!-- File Input Section -->
+            <div>
+              <label for="fileInput" style="cursor: pointer;">
+                Cambiar Imagen
+                <input id="fileInput" type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none;" />
+              </label>
+            </div>
+
+            <!-- Form Section -->
+            <div>
+              <!-- Your Form Controls Here -->
+            
+    
+            <mat-form-field id="name" appearance="fill" style="width: 400px;margin-top: 15px; ">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="name" id="name" />
+            </mat-form-field>
+          
+            <mat-form-field  id="apPaterno" appearance="fill" style="width: 400px; ">
+              <mat-label>Apellido Paterno</mat-label>
+              <input matInput formControlName="apellidoPaterno" id="apellidoPaterno" />
+            </mat-form-field>
+            
+            <mat-form-field  id="aMaterno"  appearance="fill" style="width: 400px; ">
+              <mat-label>Apellido Materno</mat-label>
+              <input matInput formControlName="apellidoMaterno" id="apellidoMaterno" />
+            </mat-form-field> 
+            <br>
+            <mat-form-field id="displayName" appearance="fill" style="width: 400px; ">
+              <mat-label>Display</mat-label>
+              <input matInput formControlName="displayName" id="displayName" />
+            </mat-form-field>
+            <mat-form-field  id="parentesco"  appearance="fill" style="width: 400px; ">
+              <mat-label>Parentesco</mat-label>
+              <input matInput formControlName="parentesco" id="parentesco" />
+            </mat-form-field> 
+            <mat-form-field id="fnacimiento" style="width: 400px;">
+                <mat-label>Fecha de Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="fechaNacimiento" id="wfechaNacimiento">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              <br>
+            <mat-form-field id="email" appearance="fill" style="width: 400px; ">
+              <mat-label>Correo Electrónico</mat-label>
+              <input matInput formControlName="email" id="email" />
+            </mat-form-field>
+            <br>
+            <mat-form-field  id="parentesco"  appearance="fill" style="width: 400px; ">
+              <mat-label>Titular </mat-label>
+              <input matInput formControlName="parentesco" id="parentesco" />
+            </mat-form-field> 
+    
+            <mat-form-field  id="phone"  appearance="fill" style="width: 400px;">
+              <mat-label>Teléfono</mat-label>
+              <input matInput formControlName="phone" id="phone" />
+            </mat-form-field>
+            
+            <br>
+            <mat-form-field  id="parentesco2"  appearance="fill" style="width: 400px; ">
+              <mat-label>Titular</mat-label>
+              <input matInput formControlName="parentesco2" id="parentesco2" />
+            </mat-form-field> 
+    
+            <mat-form-field  id="phone2"  appearance="fill" style="width: 400px;">
+              <mat-label>Teléfono 2</mat-label>
+              <input matInput formControlName="phone2" id="phone2" />
+            </mat-form-field>
+    
+            <br>
+            <mat-form-field  id="parentesco3"  appearance="fill" style="width: 400px; ">
+              <mat-label>Titular </mat-label>
+              <input matInput formControlName="parentesco3" id="parentesco3" />
+            </mat-form-field> 
+    
+            <mat-form-field  id="phone3"  appearance="fill" style="width: 400px;">
+              <mat-label>Teléfono 3</mat-label>
+              <input matInput formControlName="phone3" id="phone3" />
+            </mat-form-field>
+            <br>
+              <mat-label>Dirección</mat-label>
+              <br>
+              <mat-form-field  id="calle"  appearance="fill" style="width: 400px;">
+                  <mat-label>Calle</mat-label>
+                  <input matInput formControlName="calle" id="calle" />
+                </mat-form-field>
+                
+                <mat-form-field  id="numero"  appearance="fill" style="width: 400px;">
+                  <mat-label> Número</mat-label>
+                  <input matInput formControlName="numero" id="numero" />
+                </mat-form-field>
+                
+                <mat-form-field  id="colonia"  appearance="fill" style="width: 400px;">
+                  <mat-label>Colonia</mat-label>
+                  <input matInput formControlName="colonia" id="colonia" />
+                </mat-form-field>
+                <br>
+                <mat-form-field  id="codigoPostal"  appearance="fill" style="width: 400px;">
+                  <mat-label>Código Postal</mat-label>
+                  <input matInput formControlName="codigoPostal" id="codigoPostal" />
+                </mat-form-field>
+               
+                <mat-form-field  id="estado"  appearance="fill" style="width: 400px;">
+                  <mat-label>Estado</mat-label>
+                  <input matInput formControlName="estado" id="estado" />
+                </mat-form-field>
+              
+              <mat-form-field  id="municipio"  appearance="fill" style="width: 400px;">
+                  <mat-label>Municipio</mat-label>
+                  <input matInput formControlName="municipio" id="municipio" />
+                </mat-form-field>
+                <br>
+              <!-- Add styles to each form field as needed -->
+      
+              <button mat-button color="primary" type="submit">Guardar</button>
+              <button mat-button color="primary" type="submit" (click)="closeVerUsuario()">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+    </div>
+
+    <div *ngIf="verAlumnosClicked" id="verAlumnos">
+      <div class="mat-elevation-z8">
+
+        <div style="text-align: center; margin-top: 10px;">
+          <h2>Alumnos</h2>
+        </div>
+                  <!-- Left-aligned button -->
+     <button mat-button color="primary" type="button" (click)="addAlumno()">+ Alumno</button>
+
+        <table mat-table [dataSource]="Element_Data_Alumnos">
+          
+          <!-- Position Column -->
+          <ng-container matColumnDef="claveAlumno">
+            <th mat-header-cell *matHeaderCellDef> Clave </th>
+            <td mat-cell *matCellDef="let element"> {{element.claveAlumno}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="apellidoPaterno">
+            <th mat-header-cell *matHeaderCellDef> Apellido Paterno </th>
+            <td mat-cell *matCellDef="let element">{{element.apellidoPaterno}} 
+              {{element.apellidoMaterno}}  </td>
+          </ng-container>
+          <ng-container matColumnDef="apellidoMaterno">
+            <th mat-header-cell *matHeaderCellDef> Apellido Materno </th>
+            <td mat-cell *matCellDef="let element"> {{element.apellidoMaterno}}  </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="claveGrado">
+            <th mat-header-cell *matHeaderCellDef> Grado </th>
+            <td mat-cell *matCellDef="let element"> {{element.claveGrado}} </td>
+          </ng-container>  
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsAlumnos"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsAlumnos;"></tr>
+        </table>
+
+        <button mat-button style="margin-bottom: 10px; margin-left: 10px;" color="primary" type="submit" (click)="closeVerUsuario()">Cerrar</button>
+      </div>
+    </div>
+  
+  </div>   
