@@ -58,13 +58,13 @@
     <!-- Logo and Text in the Center -->
     <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
 
-      <span style="font-size: 24px;">Usuarios</span>
+      <span style="font-size: 24px;">Padre de Familia</span>
     </div>
 </mat-toolbar>
   
   <div class="content" role="main">
     <mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedIndexChange)="onTabChange($event)">
-      <mat-tab label="Usuarios"> 
+      <mat-tab label="Padres de Familia"> 
         <div class="mat-elevation-z8">
             <div class="centered-container">
              
@@ -120,7 +120,7 @@
             </mat-paginator>
           </div>
     </mat-tab>
-    <mat-tab label="Agregar Usuario"> 
+    <mat-tab label="Agregar Padre de Familia"> 
         <form style="margin-top: 15px; margin-left: 15px;" [formGroup]="userForm" (ngSubmit)="submitForm()">
           <div class="example-container">
             <label for="fileInput" style="cursor: pointer;">
