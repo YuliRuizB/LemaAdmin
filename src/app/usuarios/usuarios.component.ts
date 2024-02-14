@@ -60,6 +60,8 @@ export class UsuariosComponent implements AfterViewInit {
           this.client = data1;          
           this.usersService.getUserInfo(this.user.claveCliente,10).subscribe((data: any) => {        
           this.ELEMENT_DATA = data;
+          this.dataSource = new MatTableDataSource<usuariosTable>(this.ELEMENT_DATA);
+ 
        });
       });   
       }

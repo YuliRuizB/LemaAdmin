@@ -53,6 +53,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AlumnoModalComponent } from './usuarios/alumno-modal.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSliderModule,
     CommonModule,
     MatSelectModule,
+    MatTooltipModule,
     MatMenuModule,
     MatDialogModule,
     MatButtonModule,

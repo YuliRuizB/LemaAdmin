@@ -80,7 +80,7 @@
             <button mat-raised-button style="margin-left: 50px;" (click)="clearFilter()">Limpiar</button>
           </div>
         </div>
-          <table mat-table [dataSource]="ELEMENT_DATA" style="margin-left: 10px;" class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource1" style="margin-left: 10px;" class="mat-elevation-z8">
     
             <!-- Clave Column -->
             <ng-container matColumnDef="claveAlumno">
@@ -105,26 +105,27 @@
               <th mat-header-cell *matHeaderCellDef style="width: 300px;"> Apellido Materno </th>
               <td mat-cell *matCellDef="let element" style="width: 300px;"> {{element.apellidoMaterno}} </td>
             </ng-container>
-    
+   
             <!-- Grado Column -->
             <ng-container matColumnDef="claveGrado">
               <th mat-header-cell *matHeaderCellDef style="width: 300px;"> Grado </th>
               <td mat-cell *matCellDef="let element" style="width: 300px;"> {{element.claveGrado}} </td>
             </ng-container>
-    
+
             <!-- Actions Column -->
             <ng-container matColumnDef="uid" >
-              <th mat-header-cell *matHeaderCellDef style="width: 100px;"> </th>
-              <td mat-cell style="width: 100px;" *matCellDef="let element">
-                <button mat-icon-button [matMenuTriggerFor]="chatSetting">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell  *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="chatSetting1">
                   <mat-icon>...</mat-icon>
                 </button>
-                <mat-menu #chatSetting="matMenu">
+                <mat-menu #chatSetting1="matMenu">
                   <button mat-menu-item (click)="verAlumno(element.uid)">Ver Alumno</button>
                   <button mat-menu-item (click)="borrarAlumno(element.uid)">Borrar Alumno</button>
                 </mat-menu>
               </td>
             </ng-container>
+    
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -137,6 +138,55 @@
      
     </mat-tab>
     
-    <mat-tab label="Crear Alumno"> </mat-tab>
+    <mat-tab label="Crear Alumno"> 
+      <form style="margin-top: 15px; margin-left: 15px;" [formGroup]="alumnoForm" (ngSubmit)="submitForm()">
+        <div class="example-container">
+          <label for="fileInput" style="cursor: pointer;">
+            Subir Imagen
+            <input id="fileInput" type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none;" />
+          </label>
+          <br>
+          <mat-form-field id="claveAlumno" appearance="fill" style="width: 400px; ">
+            <mat-label>Clave Alumno</mat-label>
+            <input matInput formControlName="claveAlumno" id="claveAlumno" 
+            [matTooltip]="'Sugerencia: 2 iniciales del primer nombre, apellido paterno y apellido materno más día de cumpleaños a dos dígitos. ejem. YURUBE09 '"/>
+          </mat-form-field>
+
+          <mat-form-field id="name" appearance="fill" style="width: 400px;margin-top: 15px; ">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" id="name" />
+          </mat-form-field>
+          <br>
+          <mat-form-field id="apPaterno" appearance="fill" style="width: 400px; ">
+            <mat-label>Apellido Paterno</mat-label>
+            <input matInput formControlName="apellidoPaterno" id="apellidoPaterno" />
+          </mat-form-field>
+      
+          <mat-form-field id="aMaterno" appearance="fill" style="width: 400px; ">
+            <mat-label>Apellido Materno</mat-label>
+            <input matInput formControlName="apellidoMaterno" id="apellidoMaterno" />
+          </mat-form-field>
+          <br>
+        
+          <mat-form-field id="fnacimiento" style="width: 400px;">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" id="fechaNacimiento">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Grado</mat-label>
+            <mat-select formControlName="claveGrado">
+              <mat-option *ngFor="let grado of grados" [value]="grado.claveGrado"  class="custom-option">
+                {{ grado.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>    
+        <br>
+        <button mat-button color="primary" type="submit">Agregar Usuario</button>
+      </form>
+    </mat-tab>
   </mat-tab-group>
 </div>

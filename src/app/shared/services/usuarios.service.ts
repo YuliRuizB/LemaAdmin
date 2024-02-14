@@ -127,6 +127,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       });
     }
 
+    updateAlumnoInfoByID(uid: string, url: string) {
+      this.afs.collection('students', (ref) =>
+        ref
+          .where('uid', '==', uid)
+      ).get().toPromise().then((querySnapshot) => {
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            // Update the 'photoUrl' field in the Firestore document
+            this.afs.collection('students').doc(doc.id).update({
+              photoUrl: url
+            });          
+          });
+        } else {
+          console.error('Query snapshot is undefined.');
+        }
+      }).catch((error) => {
+        console.error('Error updating user info:', error);
+      });
+    }
+
       
     updateStudentUser(id: string ,uidUser: string) {
       // Update the 'photoUrl' field in the Firestore document
@@ -150,7 +170,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       const user = this.afs.collection('users').doc(newId);
       return user.set(newUser).then(() => {
         return newId;
+      });      
+    }
+
+    createStudent(newStudent: any) {
+      const newId = this.afs.createId();
+      newStudent.uid = newId;   
+      const student = this.afs.collection('students').doc(newId);
+      return student.set(newStudent).then(() => {
+        return newId;
       });
     }
-  
 }

@@ -9,8 +9,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'LEMA';
 
-  constructor(private router: Router) { 
-    console.log("app.component.");
+  constructor(private router: Router) {     
   }
 
   redirectTo(place:string){
