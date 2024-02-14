@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlumnoModalComponent } from './alumno-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuarios',
@@ -43,6 +45,7 @@ export class UsuariosComponent implements AfterViewInit {
 
   constructor( private router: Router, 
     public authService: AuthenticationService,
+    private dialog: MatDialog,
     private storage: AngularFireStorage,
     private snackBar: MatSnackBar,
     private usersService: UsersService, private fb: FormBuilder) { 
@@ -213,7 +216,19 @@ logout() {
     this.authService.signOut();
   }
 
+  configuracion(){
+    //this.router.navigate([`/${place}`]);
+  }
+
   addAlumno() {
+    const dialogRef = this.dialog.open(AlumnoModalComponent, {
+      width: '400px', // Set the width as per your requirement
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // You can handle the result if needed
+    }); 
    
   }
   submitForm() {

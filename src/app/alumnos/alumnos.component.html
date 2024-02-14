@@ -1,69 +1,142 @@
-
 <mat-toolbar style="height: 80px;">
-    <!-- Logo and Text in the Center -->
-    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
-      <img src="assets/logoTest.png" alt="Logo" style="width: 150px; height: 100px; margin-right: 10px;">
-      <span style="font-size: 24px;"> {{ client[0]?.name}} </span>
-    </div>
-  
-    <!-- Alumnos Menu -->
-    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="face" class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>face</mat-icon> Alumnos
-    </button>
-    <mat-menu #face="matMenu">
-      <button mat-menu-item (click)="redirectTo('usuarios')">Padres de Familia</button>
-      <button mat-menu-item (click)="redirectTo('alumnos')" >Alumnos</button>
-      <button mat-menu-item (click)="redirectTo('reportes-alumnos')">Reportes</button>
-    </mat-menu>
-  
-    <!-- Administración Menu -->
-    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="account_balance" class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>account_balance</mat-icon> Administración
-    </button>
-    <mat-menu #account_balance="matMenu">
-      <button mat-menu-item (click)="redirectTo('pagos')">Pagos</button>
-      <button mat-menu-item (click)="redirectTo('productos')">Productos</button>
-      <button mat-menu-item (click)="redirectTo('promociones')">Promociones</button>
-      <button mat-menu-item (click)="redirectTo('reportes-administracion')">Reportes</button>
-    </mat-menu>
-  
-    <!-- Notificaciones Menu -->
-    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="announcement" class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>announcement</mat-icon> Notificaciones
-    </button>
-    <mat-menu #announcement="matMenu">
-      <button mat-menu-item (click)="redirectTo('notificaciones')">Notificaciones</button>
-    </mat-menu>
-  
-    <!-- Salones Menu -->
-    <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="home" class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>home</mat-icon> Salones
-    </button>
-    <mat-menu #home="matMenu">
-      <button mat-menu-item (click)="redirectTo('salones')">Salones</button>
-      <button mat-menu-item (click)="redirectTo('maestros')">Maestros</button>
-      <button mat-menu-item (click)="redirectTo('reportes-salones')">Reportes</button>
-    </mat-menu>
-  
-      <!-- Administración Menu -->
-      <button mat-icon-button style="width: 250px;" [matMenuTriggerFor]="insert_emoticon" class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>insert_emoticon</mat-icon> {{ user?.displayName }}
-      </button>
-      <mat-menu #insert_emoticon="matMenu">
-        <button mat-menu-item  (click)="logout()">Cerrar Session</button>
-      </mat-menu>
-  
-  </mat-toolbar>
-  <mat-toolbar style="height: 80px;">
-    <!-- Logo and Text in the Center -->
-    <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+  <!-- Logo and Text in the Center -->
+  <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+    <img src="assets/logoTest.png" alt="Logo" style="width: 150px; height: 100px; margin-right: 10px;">
+    <span style="font-size: 24px;"> {{ client[0]?.name}} </span>
+  </div>
 
-      <span style="font-size: 24px;">Alumnos</span>
-    </div>
+  <!-- Alumnos Menu -->
+  <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="face" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>face</mat-icon> Alumnos
+  </button>
+  <mat-menu #face="matMenu">
+    <button mat-menu-item (click)="redirectTo('usuarios')">Padres de Familia</button>
+    <button mat-menu-item (click)="redirectTo('alumnos')">Alumnos</button>
+    <button mat-menu-item (click)="redirectTo('reportes-alumnos')">Reportes</button>
+  </mat-menu>
+
+  <!-- Administración Menu -->
+  <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="account_balance" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>account_balance</mat-icon> Administración
+  </button>
+  <mat-menu #account_balance="matMenu">
+    <button mat-menu-item (click)="redirectTo('pagos')">Pagos</button>
+    <button mat-menu-item (click)="redirectTo('productos')">Productos</button>
+    <button mat-menu-item (click)="redirectTo('promociones')">Promociones</button>
+    <button mat-menu-item (click)="redirectTo('reportes-administracion')">Reportes</button>
+  </mat-menu>
+
+  <!-- Notificaciones Menu -->
+  <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="announcement" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>announcement</mat-icon> Notificaciones
+  </button>
+  <mat-menu #announcement="matMenu">
+    <button mat-menu-item (click)="redirectTo('notificaciones')">Notificaciones</button>
+  </mat-menu>
+
+  <!-- Salones Menu -->
+  <button mat-icon-button style="width: 150px;" [matMenuTriggerFor]="home" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>home</mat-icon> Salones
+  </button>
+  <mat-menu #home="matMenu">
+    <button mat-menu-item (click)="redirectTo('salones')">Salones</button>
+    <button mat-menu-item (click)="redirectTo('maestros')">Maestros</button>
+    <button mat-menu-item (click)="redirectTo('reportes-salones')">Reportes</button>
+  </mat-menu>
+
+  <!-- Administración Menu -->
+  <button mat-icon-button style="width: 250px;" [matMenuTriggerFor]="insert_emoticon" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>insert_emoticon</mat-icon> {{ user?.displayName }}
+  </button>
+  <mat-menu #insert_emoticon="matMenu">
+    <button mat-menu-item (click)="logout()">Cerrar Session</button>
+    <button mat-menu-item (click)="configuracion()">Configuración</button>
+  </mat-menu>
+
 </mat-toolbar>
+<mat-toolbar style="height: 80px;">
+  <!-- Logo and Text in the Center -->
+  <div style="flex: 1; display: flex; justify-content: center; align-items: center;">
+
+    <span style="font-size: 24px;">Alumnos</span>
+  </div>
+</mat-toolbar>
+
 <div class="content" role="main">
-    <mat-tab-group>
-        <mat-tab label="Alumnoss">  </mat-tab>
-        <mat-tab label="Crear Alumno">  </mat-tab>
-    </mat-tab-group>
-    </div>
+  <mat-tab-group>
+    <mat-tab label="Alumnos">
+      <div class="mat-elevation-z8">
+        <div class="centered-container">
+    
+          <div style="margin-left: 70px;" class="search-container">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por Nombre">
+            </mat-form-field>
+            <button mat-raised-button style="margin-left: 50px;" (click)="clearFilter()">Limpiar</button>
+          </div>
+        </div>
+          <table mat-table [dataSource]="ELEMENT_DATA" style="margin-left: 10px;" class="mat-elevation-z8">
+    
+            <!-- Clave Column -->
+            <ng-container matColumnDef="claveAlumno">
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;"> Clave </th>
+              <td mat-cell *matCellDef="let element" style="width: 100px;"> {{element.claveAlumno}} </td>
+            </ng-container>
+    
+            <!-- Nombre Column -->
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef style="width: 200px;"> Nombre </th>
+              <td mat-cell *matCellDef="let element" style="width: 200px;"> {{element.nombre}} </td>
+            </ng-container>
+    
+            <!-- Apellido Paterno Column -->
+            <ng-container matColumnDef="apellidoPaterno">
+              <th mat-header-cell *matHeaderCellDef style="width: 300px;"> Apellido Paterno </th>
+              <td mat-cell *matCellDef="let element" style="width: 300px;"> {{element.apellidoPaterno}} {{element.apellidoMaterno}} </td>
+            </ng-container>
+    
+            <!-- Apellido Materno Column -->
+            <ng-container matColumnDef="apellidoMaterno">
+              <th mat-header-cell *matHeaderCellDef style="width: 300px;"> Apellido Materno </th>
+              <td mat-cell *matCellDef="let element" style="width: 300px;"> {{element.apellidoMaterno}} </td>
+            </ng-container>
+    
+            <!-- Grado Column -->
+            <ng-container matColumnDef="claveGrado">
+              <th mat-header-cell *matHeaderCellDef style="width: 300px;"> Grado </th>
+              <td mat-cell *matCellDef="let element" style="width: 300px;"> {{element.claveGrado}} </td>
+            </ng-container>
+    
+            <!-- Actions Column -->
+            <ng-container matColumnDef="uid" >
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;"> </th>
+              <td mat-cell style="width: 100px;" *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="chatSetting">
+                  <mat-icon>...</mat-icon>
+                </button>
+                <mat-menu #chatSetting="matMenu">
+                  <button mat-menu-item (click)="verAlumno(element.uid)">Ver Alumno</button>
+                  <button mat-menu-item (click)="borrarAlumno(element.uid)">Borrar Alumno</button>
+                </mat-menu>
+              </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+          </mat-paginator>
+       </div>
+     
+    </mat-tab>
+    
+    <mat-tab label="Crear Alumno"> </mat-tab>
+  </mat-tab-group>
+</div>

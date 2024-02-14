@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Injectable({
@@ -9,7 +10,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
   export class UsersService {
    
-    constructor(  private afs: AngularFirestore) { 
+    constructor(  private afs: AngularFirestore,
+      private snackBar: MatSnackBar) { 
 
     }
 
@@ -37,6 +39,48 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
         }))
       )
     }
+
+    getAlumnosInfo(claveCliente:string){    
+      return this.afs.collection('students', (ref) => 
+      ref
+      .where('claveCliente', '==', claveCliente)  
+      ).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+
+
+    getGradesInfo(claveCliente:string, limit?: number){    
+      return this.afs.collection('grades', (ref) => 
+      ref
+      .where('claveCliente', '==', claveCliente)  
+      ).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+    getAlumnosByGrade(claveCliente:string, gradeId:string){    
+      return this.afs.collection('students', (ref) => 
+      ref
+      .where('claveCliente', '==', claveCliente)  
+      .where('claveGrado', '==',gradeId )
+      .where('userId', '==','' )
+      ).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data() as any;
+          return { id, ...data }
+        }))
+      )
+    }
+
     getAlumnoInfo(userId:string){    
       return this.afs.collection('students', (ref) => 
       ref
@@ -73,8 +117,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
             // Update the 'photoUrl' field in the Firestore document
             this.afs.collection('users').doc(doc.id).update({
               photoUrl: url
-            });
-            console.log("UpdateCorrect");
+            });          
           });
         } else {
           console.error('Query snapshot is undefined.');
@@ -83,9 +126,24 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
         console.error('Error updating user info:', error);
       });
     }
+
+      
+    updateStudentUser(id: string ,uidUser: string) {
+      // Update the 'photoUrl' field in the Firestore document
+      this.afs.collection('students').doc(id).update({
+        userId: uidUser
+      });       
+     // this.notifyUser("Se associó correctamente el alumno","info");   
+    }
     
-
-
+    private showNotification(message: string, action: string) {
+      this.snackBar.open(message, action, {
+        duration: 5000,
+      });
+    }
+    private notifyUser(message: string, type: 'info' | 'error' | 'warning') {
+      this.showNotification(message, type);
+    }  
     createUser(newUser: any) {
       const newId = this.afs.createId();
       newUser.uid = newId;   

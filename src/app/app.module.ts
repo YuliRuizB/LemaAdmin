@@ -50,6 +50,9 @@ import { CommonLayoutComponent } from './menu/common-layout/common-layout.compon
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { ThemeConstantService } from './shared/services/theme-constant.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AlumnoModalComponent } from './usuarios/alumno-modal.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -60,6 +63,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
     UsuariosComponent,
     ReportesAlumnosComponent,
     PagosComponent,
+    AlumnoModalComponent,
     ProductosComponent,
     PromocionesComponent,
     ReportesAdministracionComponent,
@@ -68,6 +72,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
     MaestrosComponent,
     ReportesSalonesComponent,   
     LoginComponent,  
+    AlumnoModalComponent,
     PleaseVerifyEmailComponent,
     CommonLayoutComponent,
     VerifyEmailComponent
@@ -77,13 +82,14 @@ import { AngularFireStorage } from '@angular/fire/storage';
     BrowserModule,
     MatSliderModule,
     CommonModule,
+    MatSelectModule,
     MatMenuModule,
+    MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     NzBreadCrumbModule,
     RouterModule,
     AngularFirestoreModule,
-    
     ReactiveFormsModule,
     AngularFireModule,
     NzInputModule,
@@ -113,6 +119,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
     ThemeConstantService,
     AngularFireStorage,
      NzNotificationService,AngularFireAuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AlumnoModalComponent],
 })
 export class AppModule { }
