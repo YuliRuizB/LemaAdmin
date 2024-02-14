@@ -165,7 +165,7 @@ export class AlumnosComponent implements OnInit {
           console.log('File available at', downloadURL);
 
           // Update the correct field in the form
-          const photoUrlControl = downloadURL;
+          const photoUrlControl = downloadURL; 
           if (photoUrlControl) {
             console.log("paso");
             //  this.alumnoForm.controls['photoUrl'].setValue("valor");
